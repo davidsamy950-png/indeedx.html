@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة ألمانيا الذكية - David Sami</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 15px;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(10, 15, 25, 0.8)), 
+                        url('https://images.unsplash.com/photo-1467269204594-9661b134dd2b?q=80&w=1400&auto=format&fit=crop') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Cairo', sans-serif;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .container {
+            background: rgba(15, 23, 42, 0.82);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 22px;
+            border-radius: 24px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.9);
+            box-sizing: border-box;
+        }
+
+        .german-flag-banner {
+            display: flex;
+            height: 6px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        .flag-black { background-color: #000; flex: 1; }
+        .flag-red { background-color: #d00; flex: 1; }
+        .flag-gold { background-color: #fc0; flex: 1; }
+
+        /* شريط اللغات الثابت والواقعي فوق الخلفية */
+        .static-languages-bar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 15px;
+            background: rgba(15, 23, 42, 0.85);
+            padding: 10px;
+            border-radius: 12px;
+            border: 1px solid rgba(251, 191, 36, 0.3);
+        }
+
+        .lang-badge {
+            font-size: 11px;
+            color: #fbbf24;
+            font-weight: 700;
+            background: rgba(30, 41, 59, 0.9);
+            padding: 4px 8px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #f8fafc;
+            margin-bottom: 12px;
+            font-weight: 900;
+            font-size: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 14px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 12px;
+            color: #e2e8f0;
+            font-weight: 700;
+        }
+
+        input[type="text"], input[type="password"], textarea {
+            width: 100%;
+            background: rgba(15, 23, 42, 0.85);
+            border: 2px solid #475569;
+            border-radius: 12px;
+            color: #fff;
+            padding: 11px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 14px;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        input:focus, textarea:focus {
+            border-color: #38bdf8;
+        }
+
+        textarea {
+            height: 75px;
+            resize: none;
+        }
+
+        .btn-main {
+            width: 100%;
+            background: linear-gradient(135deg, #0284c7, #2563eb);
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 15px;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+            border-radius: 12px;
+            cursor: pointer;
+            margin-top: 6px;
+            box-shadow: 0 6px 18px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-action {
+            background: #059669;
+            color: white;
+            border: none;
+            padding: 7px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 6px;
+        }
+
+        .error-msg {
+            color: #ef4444;
+            font-size: 12px;
+            text-align: center;
+            margin-top: 8px;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+
+        .nav-tabs {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            margin-bottom: 15px;
+        }
+
+        .tab-btn {
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #cbd5e1;
+            padding: 9px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #0284c7, #2563eb);
+            color: white;
+            border-color: transparent;
+        }
+
+        .screen {
+            display: none;
+        }
+        .screen.active {
+            display: block;
+        }
+
+        .section-card {
+            background: rgba(15, 23, 42, 0.88);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 14px;
+            padding: 14px;
+            margin-bottom: 10px;
+        }
+
+        .robot-display {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid #475569;
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 14px;
+            color: #f8fafc;
+            min-height: 50px;
+            font-weight: 700;
+            user-select: text;
+            margin-top: 5px;
+        }
+
+        .quiz-option {
+            background: rgba(30, 41, 59, 0.9);
+            border: 1px solid #475569;
+            color: white;
+            padding: 10px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            text-align: right;
+            width: 100%;
+            margin-top: 6px;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { border-color: #38bdf8; background: rgba(56, 189, 248, 0.15); }
+
+        .footer-credit {
+            text-align: center;
+            margin-top: 18px;
+            font-size: 11px;
+            color: #e2e8f0;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            padding-top: 12px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .footer-credit span {
+            color: #38bdf8;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div class="german-flag-banner">
+            <div class="flag-black"></div>
+            <div class="flag-red"></div>
+            <div class="flag-gold"></div>
+        </div>
+
+        <!-- 1. شاشة تسجيل الدخول السريعة -->
+        <div id="loginScreen" class="screen active">
+            <!-- شريط اللغات الثابت بخط فخم فوق الخلفية -->
+            <div class="static-languages-bar">
+                <span class="lang-badge">مرحباً</span>
+                <span class="lang-badge">Welcome</span>
+                <span class="lang-badge">Willkommen</span>
+                <span class="lang-badge">Bienvenue</span>
+                <span class="lang-badge">Bienvenido</span>
+                <span class="lang-badge">환영합니다</span>
+                <span class="lang-badge">欢迎</span>
+                <span class="lang-badge">ようこそ</span>
+            </div>
+
+            <h2>بوابة ألمانيا الذكية 🇩🇪</h2>
+            
+            <div class="input-group">
+                <label>الكود (Username):</label>
+                <input type="text" id="username" placeholder="اكتب الكود هنا...">
+            </div>
+
+            <div class="input-group">
+                <label>كلمة المرور (Password):</label>
+                <input type="password" id="password" placeholder="اكتب كلمة المرور هنا...">
+            </div>
+
+            <button class="btn-main" onclick="handleLogin()">دخول سريع 🚀</button>
+            <div id="errorMsg" class="error-msg"></div>
+        </div>
+
+        <!-- 2. شاشة التطبيق الرئيسية -->
+        <div id="appScreen" class="screen">
+            
+            <div class="nav-tabs">
+                <button class="tab-btn active" id="btnTrans" onclick="switchTab('trans')">🇩🇪 المترجم</button>
+                <button class="tab-btn" id="btnRobot" onclick="switchTab('robot')">🤖 روبوت</button>
+                <button class="tab-btn" id="btnQuiz" onclick="switchTab('quiz')">🎮 اختبار</button>
+                <button class="tab-btn" id="btnSaved" onclick="switchTab('saved')" style="grid-column: span 3;">⭐ القاموس المحفوظ</button>
+            </div>
+
+            <!-- القسم الأول: المترجم الشامل -->
+            <div id="tabContentTrans" class="screen active">
+                <div class="section-card">
+                    <div style="font-size: 12px; color: #38bdf8; font-weight: 700; margin-bottom: 6px;">🏛 مترجم المعالم الألمانية:</div>
+                    <div class="input-group">
+                        <label>اكتب النص بالعربية:</label>
+                        <textarea id="inputText" placeholder="مثال: مرحباً بك في برلين..."></textarea>
+                    </div>
+
+                    <button class="btn-main" onclick="translateText()">ترجم الآن 🚀</button>
+
+                    <div style="margin-top: 10px;">
+                        <span style="font-size: 11px; color: #38bdf8; font-weight:700;">الترجمة الألمانية:</span>
+                        <div id="deText" style="font-size: 14px; font-weight:700; margin-top:4px; color: #f8fafc;">---</div>
+                        <button class="btn-action" onclick="saveCurrentWord()">⭐ حفظ في القاموس</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- القسم الثاني: روبوت ميني ترجمة -->
+            <div id="tabContentRobot" class="screen">
+                <div class="section-card">
+                    <div style="font-size: 13px; font-weight: 700; color: #38bdf8; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 6px; margin-bottom: 10px;">
+                        ☕ روبوت مقهى برلين (ألماني فقط)
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>اكتب لأي لغة ليحولها لألمانية:</label>
+                        <input type="text" id="robotInput" placeholder="اكتب هنا..." oninput="runMiniTranslate()">
+                    </div>
+
+                    <div>
+                        <label>نتيجة ترجمة جوجل (للقراءة فقط):</label>
+                        <div id="robotOutput" class="robot-display">انتظار إدخال النص...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- القسم الثالث: اختبار المفردات اللانهائي -->
+            <div id="tabContentQuiz" class="screen">
+                <div class="section-card">
+                    <div style="font-size: 13px; color: #38bdf8; font-weight: 700; margin-bottom: 8px;">🎮 تحدي المعالم الألمانية (أسئلة لا نهائية):</div>
+                    <div id="quizQuestion" style="font-size: 15px; font-weight: 700; margin-bottom: 12px;">جاري تحميل السؤال...</div>
+                    <div id="quizOptions"></div>
+                    <div id="quizResult" style="margin-top: 10px; font-size: 13px; font-weight: 700; text-align: center;"></div>
+                </div>
+            </div>
+
+            <!-- القسم الرابع: القاموس المحفوظ -->
+            <div id="tabContentSaved" class="screen">
+                <div class="section-card">
+                    <div style="font-size: 13px; color: #38bdf8; font-weight: 700; margin-bottom: 8px;">⭐ قاموسك الخاص ومفضلتك:</div>
+                    <div id="savedWordsList" style="max-height: 180px; overflow-y: auto; font-size: 13px; color: #e2e8f0; display: flex; flex-direction: column; gap: 6px;"></div>
+                    <button class="btn-action" style="background: #dc2626; width: 100%; margin-top: 10px;" onclick="clearSavedWords()">حذف الكل</button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer-credit">
+            جميع الحقوق محفوظة © 2026<br>
+            تم تطوير البرنامج بواسطة المهندس: <span>ديفيد سامي (David Sami)</span>
+        </div>
+
+    </div>
+
+    <script>
+        const CORRECT_USER = "1112";
+        const CORRECT_PASS = "Germany_IsCalling";
+
+        let savedVocabulary = JSON.parse(localStorage.getItem('david_german_saved')) || [];
+
+        // دالة تسجيل الدخول السريعة والخالية تماماً من اللاج
+        function handleLogin() {
+            const user = document.getElementById('username').value.trim();
+            const pass = document.getElementById('password').value.trim();
+            const err = document.getElementById('errorMsg');
+
+            err.innerText = "";
+
+            if (!user || !pass) {
+                err.innerText = "Please enter your code and password!";
+                return;
+            }
+
+            if (user === CORRECT_USER && pass === CORRECT_PASS) {
+                document.getElementById('loginScreen').classList.remove('active');
+                document.getElementById('appScreen').classList.add('active');
+                switchTab('trans');
+                return;
+            }
+
+            // رسالة الخطأ المطلوبة حرفياً عند الخطأ
+            err.innerText = "Sorry, your data is not right, please try again.";
+        }
+
+        function switchTab(tab) {
+            ['Trans', 'Robot', 'Quiz', 'Saved'].forEach(t => {
+                const btn = document.getElementById('btn' + t);
+                const content = document.getElementById('tabContent' + t);
+                if(btn) btn.classList.remove('active');
+                if(content) content.classList.remove('active');
+            });
+
+            const activeBtn = document.getElementById('btn' + tab.charAt(0).toUpperCase() + tab.slice(1));
+            const activeContent = document.getElementById('tabContent' + tab.charAt(0).toUpperCase() + tab.slice(1));
+
+            if(activeBtn) activeBtn.classList.add('active');
+            if(activeContent) activeContent.classList.add('active');
+
+            if(tab === 'quiz') loadNewQuizQuestion();
+            if(tab === 'saved') renderSavedWords();
+        }
+
+        const quizBank = [
+            { q: "ما هو معنى كلمة (Haus) بالألمانية؟", options: ["منزل", "سيارة", "طاولة"], correct: 0 },
+            { q: "ما هو معنى كلمة (Auto) بالألمانية؟", options: ["قطار", "سيارة", "طائرة"], correct: 1 },
+            { q: "ما هو معنى كلمة (Wasser) بالألمانية؟", options: ["خبز", "حليب", "ماء"], correct: 2 },
+            { q: "ما هو معنى كلمة (Buch) بالألمانية؟", options: ["كتاب", "قلم", "حقيبة"], correct: 0 },
+            { q: "ما هو معنى كلمة (Schule) بالألمانية؟", options: ["مستشفى", "مدرسة", "حديقة"], correct: 1 },
+            { q: "ما هو معنى كلمة (Apfel) بالألمانية؟", options: ["موز", "تفاح", "برتقال"], correct: 1 }
+        ];
+
+        function loadNewQuizQuestion() {
+            const resBox = document.getElementById('quizResult');
+            if(resBox) resBox.innerHTML = "";
+            
+            const randomQuiz = quizBank[Math.floor(Math.random() * quizBank.length)];
+            const qEl = document.getElementById('quizQuestion');
+            const optEl = document.getElementById('quizOptions');
+            
+            if(qEl) qEl.innerText = randomQuiz.q;
+            
+            if(optEl) {
+                let optionsHTML = "";
+                randomQuiz.options.forEach((opt, idx) => {
+                    let isCorr = (idx === randomQuiz.correct);
+                    optionsHTML += `<button class="quiz-option" onclick="handleQuizAnswer(${isCorr})">${opt}</button>`;
+                });
+                optEl.innerHTML = optionsHTML;
+            }
+        }
+
+        function handleQuizAnswer(isCorrect) {
+            const res = document.getElementById('quizResult');
+            if(!res) return;
+
+            if(isCorrect) {
+                res.style.color = "#10b981";
+                res.innerHTML = "إجابة صحيحة! بطل الألمانية 🟢🚀<br>الانتقال للسؤال التالي...";
+            } else {
+                res.style.color = "#ef4444";
+                res.innerHTML = "إجابة خاطئة! حاول في السؤال القادم ❌<br>الانتقال للسؤال التالي...";
+            }
+
+            setTimeout(() => {
+                loadNewQuizQuestion();
+            }, 1000);
+        }
+
+        async function translateText() {
+            const text = document.getElementById('inputText').value.trim();
+            const de = document.getElementById('deText');
+
+            if (!text) {
+                de.innerText = "اكتب نصاً أولاً!";
+                return;
+            }
+
+            de.innerText = "جاري الترجمة...";
+            try {
+                const res = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=de&dt=t&q=${encodeURIComponent(text)}`);
+                const data = await res.json();
+                let trans = "";
+                if (data && data[0]) data[0].forEach(i => { if (i[0]) trans += i[0]; });
+                de.innerText = trans || "خطأ في الترجمة";
+            } catch (e) {
+                de.innerText = "تعذر الاتصال بالخدمة.";
+            }
+        }
+
+        async function runMiniTranslate() {
+            const inputVal = document.getElementById('robotInput').value.trim();
+            const outputBox = document.getElementById('robotOutput');
+            if(!outputBox) return;
+
+            if (!inputVal) {
+                outputBox.innerText = "انتظار إدخال النص...";
+                return;
+            }
+
+            outputBox.innerText = "جاري جلب الترجمة الألمانية...";
+            try {
+                const res = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=de&dt=t&q=${encodeURIComponent(inputVal)}`);
+                const data = await res.json();
+                let trans = "";
+                if (data && data[0]) data[0].forEach(i => { if (i[0]) trans += i[0]; });
+                outputBox.innerText = trans || "لم يتم العثور على ترجمة.";
+            } catch (e) {
+                outputBox.innerText = "خطأ في الاتصال بالسيرفر.";
+            }
+        }
+
+        function saveCurrentWord() {
+            const word = document.getElementById('deText').innerText;
+            if(!word || word === "---" || word.includes("اكتب")) {
+                alert("لا توجد ترجمة صحيحة للحفظ!");
+                return;
+            }
+            if(!savedVocabulary.includes(word)) {
+                savedVocabulary.push(word);
+                localStorage.setItem('david_german_saved', JSON.stringify(savedVocabulary));
+                alert("تم حفظ الكلمة بنجاح في القاموس! ⭐");
+            } else {
+                alert("الكلمة موجودة بالفعل في قاموسك.");
+            }
+        }
+
+        function renderSavedWords() {
+            const list = document.getElementById('savedWordsList');
+            if(!list) return;
+
+            savedVocabulary = JSON.parse(localStorage.getItem('david_german_saved')) || [];
+            if(savedVocabulary.length === 0) {
+                list.innerHTML = `<div style="text-align:center; color:#94a3b8; padding:10px;">لا توجد كلمات محفوظة حتى الآن.</div>`;
+                return;
+            }
+            let html = "";
+            savedVocabulary.forEach((w) => {
+                html += `<div style="background: rgba(30,41,59,0.85); padding: 8px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center;">
+                    <span>🇩🇪 ${w}</span>
+                </div>`;
+            });
+            list.innerHTML = html;
+        }
+
+        function clearSavedWords() {
+            savedVocabulary = [];
+            localStorage.removeItem('david_german_saved');
+            renderSavedWords();
+        }
+    </script>
+
+</body>
+</html>
